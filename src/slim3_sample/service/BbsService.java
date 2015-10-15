@@ -28,10 +28,10 @@ public class BbsService {
         Transaction tx = Datastore.beginTransaction();
         try {
             Datastore.put(tx, head, body);
-            Datastore.commit(tx);
+            tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
-                Datastore.rollback(tx);
+                tx.rollback();
             }
             throw e;
         }
@@ -51,10 +51,10 @@ public class BbsService {
         try {
             Datastore.get(tx, HeadMeta.get(), head.getKey(), head.getVersion());
             Datastore.put(tx, head, comment);
-            Datastore.commit(tx);
+            tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
-                Datastore.rollback(tx);
+                tx.rollback();
             }
             throw e;
         }
@@ -70,10 +70,10 @@ public class BbsService {
         try {
             Datastore.get(tx, HeadMeta.get(), head.getKey(), head.getVersion());
             Datastore.put(tx, head, body);
-            Datastore.commit(tx);
+            tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
-                Datastore.rollback(tx);
+                tx.rollback();
             }
             throw e;
         }
@@ -85,10 +85,10 @@ public class BbsService {
             Head head = Datastore.get(tx, HeadMeta.get(), headKey);
             Key bodyKey = head.getBodyRef().getKey();
             Datastore.delete(tx, headKey, bodyKey);
-            Datastore.commit(tx);
+            tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
-                Datastore.rollback(tx);
+                tx.rollback();
             }
             throw e;
         }

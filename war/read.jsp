@@ -19,14 +19,14 @@
     <tbody>
       <tr>
         <td>
-          <div class="read_header">${f:h(head.userName)}さん(<fmt:formatDate value="${head.postDate}" pattern="yyyyy/MM/dd HH:mm:ss" />)</div>
+          <div class="read_header">${f:h(head.userName)} さん (<fmt:formatDate value="${head.postDate}" pattern="yyyy/MM/dd HH:mm:ss" />)</div>
           <hr>
           <div class="read_body">${f:br(f:h(body.text))}</div>
-          <div class="read_footer">
+          <div class="read_footer" align="right">
             <span class="err">${errors.password}</span>
             <form method="post" action="edit" style="display: inline">
               <input type="hidden" name="key" value="${f:h(head.key)}"/>
-              <input type="password" ${f:text("password")} class="password${f:errorClass('password', 'err')}"/>
+              <input type="password" ${f:text("password")} class="password ${f:errorClass('password', 'err')}"/>
               <input type="submit" value=" 修正 " class="button"/>
             </form>
           </div>
@@ -58,14 +58,14 @@
         <tr>
           <td class="label">お名前</td>
           <td class="elem">
-            <input type="text" ${f:text("userName")} class="normal${f:errorClass('userName', 'err')}" />
+            <input type="text" ${f:text("userName")} class="normal ${f:errorClass('userName', 'err')}" />
             <span class="err">${errors.userName}</span>
           </td>
         </tr>
         <tr>
           <td>コメント</td>
           <td>
-            <textarea name="comment" class="smalltext${f:errorClass('comment', 'err')}">${f:h(comment)}</textarea>
+            <textarea name="comment" class="smalltext ${f:errorClass('comment', 'err')}">${f:h(comment)}</textarea>
             <div class="err">${errors.comment}</div>
           </td>
         </tr>

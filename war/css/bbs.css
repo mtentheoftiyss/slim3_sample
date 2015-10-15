@@ -1,1 +1,18 @@
 @CHARSET "UTF-8";
+
+table{border: solid thin;font-size: 14px;width: 50%;}
+tr{border: solid thin;height: 30px;}
+td{border: solid thin;}
+thead{background-color: powderblue;}
+
+input[name="subject"]{width: 50%;}
+input[name="userName"]{width: 50%;}
+textarea[name="text"]{width: 100%;height: 100px;}
+textarea[name="comment"]{width: 100%;height: 100px;}
+input[name="password"]{width: 25%;}
+span.err{color: red;}
+div.err{color: red;}
+input[class~="err"]{background-color: pink;}
+textarea[class~="err"]{background-color: pink;}
+
+

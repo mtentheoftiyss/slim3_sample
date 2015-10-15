@@ -29,21 +29,21 @@
           <tr>
             <td class="label">タイトル</td>
             <td class="elem">
-              <input type="text" ${f:text("subject")} class="normal${f:errorClass("subject","err")}"/>
+              <input type="text" ${f:text("subject")} class="normal ${f:errorClass("subject","err")}"/>
               <span class="err">${errors.subject}</span>
             </td>
           </tr>
           <tr>
             <td>お名前</td>
             <td>
-              <input type="text" ${f:text("userName")} class="normal${f:errorClass("userName","err")}"/>
+              <input type="text" ${f:text("userName")} class="normal ${f:errorClass("userName","err")}"/>
               <span class="err">${errors.userName}</span>
             </td>
           </tr>
           <tr>
             <td>本文</td>
             <td>
-              <textarea name="text" class="largetext${f:errorClass('text','err')}">${f:h(text)}</textarea>
+              <textarea name="text" class="largetext ${f:errorClass('text','err')}">${f:h(text)}</textarea>
               <div class="err">${errors.text}</div>
             </td>
           </tr>
