@@ -7,6 +7,8 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.slim3.tester.AppEngineTestCase;
 
+import slim3_sample.model.bbs.Body;
+
 public class BodyTest extends AppEngineTestCase {
 
     private Body model = new Body();

@@ -7,6 +7,8 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.slim3.tester.AppEngineTestCase;
 
+import slim3_sample.service.bbs.BbsService;
+
 public class BbsServiceTest extends AppEngineTestCase {
 
     private BbsService service = new BbsService();

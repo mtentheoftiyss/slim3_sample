@@ -14,6 +14,16 @@
         <param-value>UTF-8</param-value>
     </context-param>
 
+	<filter>
+		<filter-name>LoginCheckFilter</filter-name>
+		<filter-class>slim3_sample.filter.LoginCheckFilter</filter-class>
+	</filter>
+	<!-- 1. filter added for CNMV. start -->
+	<filter>
+		<filter-name>CNFrontController</filter-name>
+		<filter-class>jp.crossnote.slim3.filter.CNFrontController</filter-class>
+	</filter>
+	<!-- 1. filter added for CNMV. end -->
     <filter>
         <filter-name>HotReloadingFilter</filter-name>
         <filter-class>org.slim3.controller.HotReloadingFilter</filter-class>
@@ -26,13 +36,25 @@
         <filter-name>FrontController</filter-name>
         <filter-class>org.slim3.controller.FrontController</filter-class>
     </filter>
-	<!-- 1. filter added for CNMV. start -->
-	<filter>
-		<filter-name>CNFrontController</filter-name>
-		<filter-class>jp.crossnote.slim3.filter.CNFrontController</filter-class>
-	</filter>
-	<!-- 1. filter added for CNMV. end -->
 
+	<filter-mapping>
+		<filter-name>LoginCheckFilter</filter-name>
+		<url-pattern>/bbs/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<!-- 2. mapping added for CNMV. start -->
+	<filter-mapping>
+		<filter-name>CNFrontController</filter-name>
+		<url-pattern>/cn/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<!-- 2. mapping added for CNMV. end -->
     <filter-mapping>
         <filter-name>HotReloadingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -51,23 +73,18 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-	<!-- 2. mapping added for CNMV. start -->
-	<filter-mapping>
-		<filter-name>CNFrontController</filter-name>
-		<url-pattern>/cn/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>ERROR</dispatcher>
-	</filter-mapping>
-	<!-- 2. mapping added for CNMV. end -->
-    
+
+<!-- 
+	<servlet>
+		<servlet-name>LoginFormServlet</servlet-name>
+		<servlet-class>slim3_sample.servlet.LoginFormServlet</servlet-class>
+	</servlet>
+ -->
     <servlet>
         <servlet-name>GlobalTransactionServlet</servlet-name>
         <servlet-class>org.slim3.datastore.GlobalTransactionServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    
     <!--
     <servlet>
         <servlet-name>GWTServiceServlet</servlet-name>
@@ -75,29 +92,52 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     -->
-
     <servlet>
         <servlet-name>KtrWjrServiceServlet</servlet-name>
         <servlet-class>bufferings.ktr.wjr.server.service.KtrWjrServiceServlet</servlet-class>
     </servlet>
 
+<!-- 
+	<servlet-mapping>
+		<servlet-name>LoginFormServlet</servlet-name>
+		<url-pattern>/_ah/login_required</url-pattern>
+	</servlet-mapping>
+ -->
     <servlet-mapping>
         <servlet-name>GlobalTransactionServlet</servlet-name>
         <url-pattern>/slim3/gtx</url-pattern>
     </servlet-mapping>
-    
     <!--
     <servlet-mapping>
         <servlet-name>GWTServiceServlet</servlet-name>
         <url-pattern>*.s3gwt</url-pattern>
     </servlet-mapping>
     -->
-
     <servlet-mapping>
         <servlet-name>KtrWjrServiceServlet</servlet-name>
         <url-pattern>/ktrwjr/ktrwjr/ktrwjr.s3gwt</url-pattern>
     </servlet-mapping>
-    
+
+<!-- 
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/bbs/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>
+ -->
+	<!-- 3. security added for CNMV. start -->
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/cn/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<!-- 3. security added for CNMV. end -->
     <security-constraint>
         <web-resource-collection>
             <url-pattern>*.jsp</url-pattern>
@@ -121,14 +161,4 @@
             <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
-	<!-- 3. security added for CNMV. start -->
-	<security-constraint>
-		<web-resource-collection>
-			<url-pattern>/cn/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>admin</role-name>
-		</auth-constraint>
-	</security-constraint>
-	<!-- 3. security added for CNMV. end -->
 </web-app>
