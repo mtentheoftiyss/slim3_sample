@@ -10,6 +10,11 @@ import slim3_sample.model.bbs.Body;
 import slim3_sample.model.bbs.Head;
 import slim3_sample.service.bbs.BbsService;
 
+/**
+ * 記事の編集画面用のコントローラー
+ * @author 10257
+ *
+ */
 public class EditController extends Controller {
 
     @Override

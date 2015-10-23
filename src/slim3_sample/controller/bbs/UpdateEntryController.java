@@ -10,6 +10,11 @@ import slim3_sample.model.bbs.Body;
 import slim3_sample.model.bbs.Head;
 import slim3_sample.service.bbs.BbsService;
 
+/**
+ * 記事の更新用のコントローラー
+ * @author 10257
+ *
+ */
 public class UpdateEntryController extends Controller {
 
     @Override

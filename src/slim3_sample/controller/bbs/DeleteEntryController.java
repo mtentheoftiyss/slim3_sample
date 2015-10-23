@@ -7,6 +7,11 @@ import org.slim3.util.ApplicationMessage;
 import slim3_sample.model.bbs.Head;
 import slim3_sample.service.bbs.BbsService;
 
+/**
+ * 記事の削除用のコントローラー
+ * @author 10257
+ *
+ */
 public class DeleteEntryController extends Controller {
 
     @Override

@@ -1,6 +1,9 @@
 package slim3_sample.controller.bbs;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -8,12 +11,23 @@ import org.slim3.controller.validator.Validators;
 import org.slim3.util.ApplicationMessage;
 import org.slim3.util.BeanUtil;
 
+import slim3_sample.constants.Constants;
 import slim3_sample.model.bbs.Comment;
 import slim3_sample.model.bbs.Head;
 import slim3_sample.service.bbs.BbsService;
 
+import com.google.appengine.api.mail.MailService.Message;
+import com.google.appengine.api.mail.MailServiceFactory;
+
+/**
+ * コメント登録用のコントローラー
+ * @author 10257
+ *
+ */
 public class PostCommentController extends Controller {
 
+    private static final Logger logger = Logger.getLogger(PostCommentController.class.getName());
+    
     @Override
     public Navigation run() throws Exception {
         if (!isPost()) {
@@ -45,8 +59,39 @@ public class PostCommentController extends Controller {
         comment.setPostDate(new Date());
         // 記事とコメントを登録
         service.insert(head, comment);
+        
+        // 投稿者にメール送信
+        // メール作成
+        String sender = sessionScope(Constants.SESSION_AUTH_EMAIL).toString();
+        List<String> toList = Arrays.asList(head.getMailAddress());
+        List<String> ccList = null;
+        List<String> bccList = null;
+        String subject = "コメント通知";
+        String textBody = "コメント登録しました。";
+        Message msg = new Message();
+        // From
+        msg.setSender(sender);
+        // To
+        msg.setTo(toList);
+        // Cc
+        msg.setCc(ccList);
+        // Bcc
+        msg.setBcc(bccList);
+        // 件名
+        msg.setSubject(subject);
+        // 本文
+        msg.setTextBody(textBody);
+        String mailSendErr = "";
+        try {
+            MailServiceFactory.getMailService().send(msg);
+        } catch (Exception e) {
+            mailSendErr = "&mailSendErr=true";
+            logger.info("メール送信エラー");
+            logger.info(e.getMessage());
+        }
+        
         // 記事詳細にリダイレクト(GETパラメータで記事の主キーを指定)
-        return redirect(basePath + "read?key="+asString("key"));
+        return redirect(basePath + "read?key=" + asString("key") + mailSendErr);
     }
     
     private boolean validate() {

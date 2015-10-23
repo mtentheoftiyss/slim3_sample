@@ -1,5 +1,6 @@
 package slim3_sample.service.bbs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slim3.datastore.Datastore;
@@ -14,12 +15,20 @@ import slim3_sample.model.bbs.Head;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
 
+/**
+ * 掲示板更新用サービス
+ * @author 10257
+ *
+ */
 public class BbsService {
+    
+    // 記事一覧の取得
     public List<Head> getAll() {
         HeadMeta m = HeadMeta.get();
         return Datastore.query(m).sort(m.postDate.desc).asList();
     }
     
+    // 記事の登録
     public void insert(Head head, Body body) throws Exception {
         head.setKey(Datastore.allocateId(HeadMeta.get()));
         body.setKey(Datastore.allocateId(head.getKey(), BodyMeta.get()));
@@ -37,6 +46,7 @@ public class BbsService {
         }
     }
     
+    // コメントの登録
     public void insert(Head head, Comment comment) throws Exception {
         long newCommentId = head.getLastCommentId() + 1L;
         
@@ -61,10 +71,12 @@ public class BbsService {
         
     }
     
+    // 記事の取得
     public Head get(Key headKey) {
         return Datastore.getOrNull(HeadMeta.get(), headKey);
     }
     
+    // 記事の更新
     public void update(Head head, Body body) throws Exception {
         Transaction tx = Datastore.beginTransaction();
         try {
@@ -79,12 +91,19 @@ public class BbsService {
         }
     }
     
+    // 記事の削除
     public void delete(Key headKey) throws Exception {
         Transaction tx = Datastore.beginTransaction();
         try {
             Head head = Datastore.get(tx, HeadMeta.get(), headKey);
             Key bodyKey = head.getBodyRef().getKey();
+            List<Comment> commentList = head.getCommentRef().getModelList();
+            List<Key> commentKeys= new ArrayList<Key>();
+            for (Comment cmnt: commentList) {
+                commentKeys.add(cmnt.getKey());
+            }
             Datastore.delete(tx, headKey, bodyKey);
+            Datastore.delete(tx, commentKeys);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -92,7 +111,6 @@ public class BbsService {
             }
             throw e;
         }
-    
     }
     
 }

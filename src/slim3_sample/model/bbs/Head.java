@@ -12,6 +12,11 @@ import slim3_sample.meta.bbs.CommentMeta;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * 記事の見出し用のモデル
+ * @author 10257
+ *
+ */
 @Model(schemaVersion = 1)
 public class Head implements Serializable {
 
@@ -29,6 +34,8 @@ public class Head implements Serializable {
     private Date postDate;
     // 投稿者名
     private String userName;
+    // 投稿者メールアドレス
+    private String mailAddress;
     // 編集用パスワード
     private String password;
     // 最新コメントID(＝コメント数)
@@ -207,5 +214,13 @@ public class Head implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
+    }
+
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
     }
 }

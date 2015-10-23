@@ -9,6 +9,11 @@ import org.slim3.datastore.ModelRef;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * 記事のコメント用のモデル
+ * @author 10257
+ *
+ */
 @Model(schemaVersion = 1)
 public class Comment implements Serializable {
 

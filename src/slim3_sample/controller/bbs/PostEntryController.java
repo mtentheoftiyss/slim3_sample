@@ -7,10 +7,16 @@ import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.util.BeanUtil;
 
+import slim3_sample.constants.Constants;
 import slim3_sample.model.bbs.Body;
 import slim3_sample.model.bbs.Head;
 import slim3_sample.service.bbs.BbsService;
 
+/**
+ * 記事の登録用のコントローラー
+ * @author 10257
+ *
+ */
 public class PostEntryController extends Controller {
 
     @Override
@@ -24,6 +30,7 @@ public class PostEntryController extends Controller {
         BeanUtil.copy(request, head);
         BeanUtil.copy(request, body);
         head.setPostDate(new Date());
+        head.setMailAddress(sessionScope(Constants.SESSION_AUTH_EMAIL).toString());
         
         BbsService service = new BbsService();
         service.insert(head, body);

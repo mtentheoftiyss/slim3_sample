@@ -10,6 +10,11 @@ import slim3_sample.meta.bbs.HeadMeta;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * 記事の本文用のモデル
+ * @author 10257
+ *
+ */
 @Model(schemaVersion = 1)
 public class Body implements Serializable {
 

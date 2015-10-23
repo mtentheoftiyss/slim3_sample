@@ -1,12 +1,24 @@
 package slim3_sample.constants;
 
+/**
+ * 定数定義クラス
+ * @author 10257
+ *
+ */
 public class Constants {
     private Constants() {}
     
-    public static final String CLIENT_ID = "462565675213-u1kck4gg5pfc8mag6iep81ufebdli9sh.apps.googleusercontent.com";
-    public static final String CLIENT_SECRET = "eizUfRs-kOQNsouR4bRIHVDF";
-    
+    // ベースパス
     public static final String BASE_PATH = "/bbs";
+    // OpenIDConnect認証後のリダイレクト先パス
     public static final String CALLBACK_PATH = "/openIdConnectVerify";
+    // 認証時に要求する権限
+    public static final String SCOPE = "openid email profile";
+    
+    // セッション格納用変数名
+    // ユーザーID
+    public static final String SESSION_AUTH_USERID = "auth_userid";
+    // メールアドレス
+    public static final String SESSION_AUTH_EMAIL = "auth_email";
     
 }
